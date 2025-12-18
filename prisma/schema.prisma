@@ -4,7 +4,7 @@
 // 1. Define the data source (PostgreSQL for Supabase)
 datasource db {
   provider = "postgresql" // Supabase uses PostgreSQL
-  url      = env("DIRECT_URL") // This is loaded from your .env file
+  url      = env("HOSTED_DIRECT_URL") // This is loaded from your .env file
 }
 
 // 2. Define the generator (Prisma Client)
