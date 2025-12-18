@@ -66,6 +66,12 @@ All UI must use **Shopify Polaris Web Components FIRST**, and follow Shopify’s
 - https://shopify.dev/docs/api/app-home/using-polaris-components#working-with-forms
 - https://shopify.dev/docs/api/app-home/using-polaris-components#accessibility
 
+### Polaris Web Components (Checkout UI extension)
+- https://shopify.dev/docs/api/checkout-ui-extensions/latest/polaris-web-components
+
+### Checkout UI extension APIs
+- https://shopify.dev/docs/api/checkout-ui-extensions/latest/apis
+
 ### Shopify Remix app package (strict)
 - https://shopify.dev/docs/api/shopify-app-remix/latest
 

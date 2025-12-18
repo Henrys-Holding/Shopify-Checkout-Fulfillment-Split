@@ -13,21 +13,133 @@ generator client {
 }
 
 model Session {
-  id            String    @id
-  shop          String
-  state         String
-  isOnline      Boolean   @default(false)
-  scope         String?
-  expires       DateTime?
-  accessToken   String
-  userId        BigInt?
-  firstName     String?
-  lastName      String?
-  email         String?
-  accountOwner  Boolean   @default(false)
-  locale        String?
-  collaborator  Boolean?  @default(false)
-  emailVerified Boolean?  @default(false)
+  id                  String    @id
+  shop                String
+  state               String
+  isOnline            Boolean   @default(false)
+  scope               String?
+  expires             DateTime?
+  accessToken         String
+  userId              BigInt?
+  firstName           String?
+  lastName            String?
+  email               String?
+  accountOwner        Boolean   @default(false)
+  locale              String?
+  collaborator        Boolean?  @default(false)
+  emailVerified       Boolean?  @default(false)
   refreshToken        String?
   refreshTokenExpires DateTime?
+}
+
+// ==========================================
+// CORE PLATFORM TABLES
+// (Generic: Usable by any app/feature)
+// ==========================================
+
+model Shop {
+  id             String    @id @default(uuid()) @db.Uuid
+  shop_domain    String    @unique
+  installed_at   DateTime  @default(now())
+  uninstalled_at DateTime?
+
+  // Relations
+  orders    Order[]
+  customers Customer[]
+  products  Product[]
+
+  @@map("core_shops")
+}
+
+model Customer {
+  id                   String  @id @default(uuid()) @db.Uuid
+  shopify_customer_gid String  @unique
+  email                String?
+  first_name           String?
+  last_name            String?
+
+  shop_domain String
+  shop        Shop   @relation(fields: [shop_domain], references: [shop_domain])
+
+  orders Order[]
+
+  @@map("core_customers")
+}
+
+model Product {
+  id                  String  @id @default(uuid()) @db.Uuid
+  shopify_product_gid String  @unique
+  title               String
+  handle              String?
+
+  shop_domain String
+  shop        Shop   @relation(fields: [shop_domain], references: [shop_domain])
+
+  @@map("core_products")
+}
+
+model Order {
+  id                 String   @id @default(uuid()) @db.Uuid
+  shopify_order_gid  String   @unique
+  shopify_order_name String // e.g. "#1001"
+  currency_code      String   @default("USD")
+  total_price        Decimal? @db.Decimal(10, 2)
+  created_at         DateTime @default(now())
+
+  // Foreign Keys
+  shop_domain String
+  customer_id String? @db.Uuid
+
+  // Relations
+  shop     Shop      @relation(fields: [shop_domain], references: [shop_domain])
+  customer Customer? @relation(fields: [customer_id], references: [id])
+
+  // App Extension Relations (1-to-1 or 1-to-many)
+  fulfillment_split FulfillmentSplitState?
+  shipping_invoices ShippingInvoice[]
+
+  @@map("core_orders")
+}
+
+// ==========================================
+// APP SPECIFIC TABLES: Fulfillment Split
+// (Specific: Only for this feature)
+// ==========================================
+model FulfillmentSplitState {
+  id String @id @default(uuid()) @db.Uuid
+
+  // Link to Core Order (1:1 relation)
+  order_id String @unique @db.Uuid
+  order    Order  @relation(fields: [order_id], references: [id])
+
+  // App Logic Data
+  user_choice        String @default("unknown") // 'yes', 'no'
+  calculated_parcels Int    @default(1)
+
+  requires_additional_shipping Boolean  @default(false)
+  additional_shipping_amount   Decimal? @db.Decimal(10, 2)
+
+  updated_at DateTime @updatedAt
+
+  @@map("app_fulfillment_splits")
+}
+
+model ShippingInvoice {
+  id String @id @default(uuid()) @db.Uuid
+
+  // Link to Core Order (Many invoices possible per order, technically)
+  order_id String @db.Uuid
+  order    Order  @relation(fields: [order_id], references: [id])
+
+  // Draft Order Logic
+  draft_order_gid String? @unique
+  invoice_url     String?
+  status          String  @default("pending") // 'pending', 'paid', 'void'
+
+  sent_at DateTime?
+  paid_at DateTime?
+
+  created_at DateTime @default(now())
+
+  @@map("app_shipping_invoices")
 }

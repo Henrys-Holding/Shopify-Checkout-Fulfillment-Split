@@ -1,0 +1,341 @@
+{
+    "id": 5898400563383,
+    "admin_graphql_api_id": "gid://shopify/Order/5898400563383",
+    "app_id": 1354745,
+    "browser_ip": "99.228.48.255",
+    "buyer_accepts_marketing": false,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": null,
+    "checkout_id": 46296839913655,
+    "checkout_token": "260348859a7e1f7f19115294e93b84d7",
+    "client_details": {
+        "accept_language": null,
+        "browser_height": null,
+        "browser_ip": "99.228.48.255",
+        "browser_width": null,
+        "session_hash": null,
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+    },
+    "closed_at": null,
+    "company": null,
+    "confirmation_number": "0M3HHTLGP",
+    "confirmed": true,
+    "contact_email": "info.develop10@gmail.com",
+    "created_at": "2025-12-17T15:17:38-05:00",
+    "currency": "USD",
+    "current_shipping_price_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "current_subtotal_price": "395.16",
+    "current_subtotal_price_set": {
+        "shop_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        }
+    },
+    "current_total_additional_fees_set": null,
+    "current_total_discounts": "0.00",
+    "current_total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "395.16",
+    "current_total_price_set": {
+        "shop_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        }
+    },
+    "current_total_tax": "0.00",
+    "current_total_tax_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "customer_locale": "en-CA",
+    "device_id": null,
+    "discount_codes": [],
+    "duties_included": false,
+    "email": "info.develop10@gmail.com",
+    "estimated_taxes": false,
+    "financial_status": "paid",
+    "fulfillment_status": null,
+    "landing_site": null,
+    "landing_site_ref": null,
+    "location_id": null,
+    "merchant_business_entity_id": "21905440951",
+    "merchant_of_record_app_id": null,
+    "name": "#1020",
+    "note": null,
+    "note_attributes": [],
+    "number": 20,
+    "order_number": 1020,
+    "order_status_url": "https://plus-store-9359.myshopify.com/71792787639/orders/b9a7cf05967cd8bac9db7615cb4de248/authenticate?key=4d672b924d18bf438ed44c066e905b65",
+    "original_total_additional_fees_set": null,
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+        "manual"
+    ],
+    "phone": null,
+    "po_number": null,
+    "presentment_currency": "USD",
+    "processed_at": "2025-12-17T15:17:37-05:00",
+    "reference": null,
+    "referring_site": null,
+    "source_identifier": null,
+    "source_name": "shopify_draft_order",
+    "source_url": null,
+    "subtotal_price": "395.16",
+    "subtotal_price_set": {
+        "shop_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        }
+    },
+    "tags": "",
+    "tax_exempt": false,
+    "tax_lines": [],
+    "taxes_included": false,
+    "test": false,
+    "token": "b9a7cf05967cd8bac9db7615cb4de248",
+    "total_cash_rounding_payment_adjustment_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "total_cash_rounding_refund_adjustment_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "total_discounts": "0.00",
+    "total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "total_line_items_price": "395.16",
+    "total_line_items_price_set": {
+        "shop_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        }
+    },
+    "total_outstanding": "0.00",
+    "total_price": "395.16",
+    "total_price_set": {
+        "shop_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "395.16",
+            "currency_code": "USD"
+        }
+    },
+    "total_shipping_price_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "total_tax": "0.00",
+    "total_tax_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "USD"
+        }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 3110,
+    "updated_at": "2025-12-17T15:17:39-05:00",
+    "user_id": 93593600183,
+    "billing_address": {
+        "first_name": "Rico",
+        "address1": "8 Water Walk Drive",
+        "phone": null,
+        "city": "Markham",
+        "zip": "L3R 6L4",
+        "province": "Ontario",
+        "country": "Canada",
+        "last_name": "Tse",
+        "address2": null,
+        "company": null,
+        "latitude": 43.8553303,
+        "longitude": -79.3294255,
+        "name": "Rico Tse",
+        "country_code": "CA",
+        "province_code": "ON"
+    },
+    "customer": {
+        "id": 7969073856695,
+        "created_at": "2025-10-28T10:45:46-04:00",
+        "updated_at": "2025-12-17T15:17:39-05:00",
+        "first_name": "Xiaodan",
+        "last_name": "Tse",
+        "state": "disabled",
+        "note": null,
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "email": "info.develop10@gmail.com",
+        "phone": null,
+        "currency": "USD",
+        "tax_exemptions": [],
+        "admin_graphql_api_id": "gid://shopify/Customer/7969073856695",
+        "default_address": {
+            "id": 9066298638519,
+            "customer_id": 7969073856695,
+            "first_name": "Rico",
+            "last_name": "Tse",
+            "company": null,
+            "address1": "8 Water Walk Drive",
+            "address2": null,
+            "city": "Markham",
+            "province": "Ontario",
+            "country": "Canada",
+            "zip": "L3R 6L4",
+            "phone": null,
+            "name": "Rico Tse",
+            "province_code": "ON",
+            "country_code": "CA",
+            "country_name": "Canada",
+            "default": true
+        }
+    },
+    "discount_applications": [],
+    "fulfillments": [],
+    "line_items": [
+        {
+            "id": 14839282466999,
+            "admin_graphql_api_id": "gid://shopify/LineItem/14839282466999",
+            "attributed_staffs": [],
+            "current_quantity": 4,
+            "fulfillable_quantity": 4,
+            "fulfillment_service": "manual",
+            "fulfillment_status": null,
+            "gift_card": false,
+            "grams": 777,
+            "name": "5 Vegas Gold Double Nickel Box-Pressed Toro - Box of 20",
+            "price": "98.79",
+            "price_set": {
+                "shop_money": {
+                    "amount": "98.79",
+                    "currency_code": "USD"
+                },
+                "presentment_money": {
+                    "amount": "98.79",
+                    "currency_code": "USD"
+                }
+            },
+            "product_exists": true,
+            "product_id": 8271567519927,
+            "properties": [],
+            "quantity": 4,
+            "requires_shipping": true,
+            "sales_line_item_group_id": null,
+            "sku": "113297",
+            "taxable": true,
+            "title": "5 Vegas Gold Double Nickel Box-Pressed Toro",
+            "total_discount": "0.00",
+            "total_discount_set": {
+                "shop_money": {
+                    "amount": "0.00",
+                    "currency_code": "USD"
+                },
+                "presentment_money": {
+                    "amount": "0.00",
+                    "currency_code": "USD"
+                }
+            },
+            "variant_id": 45378353103031,
+            "variant_inventory_management": null,
+            "variant_title": "Box of 20",
+            "vendor": "5 Vegas",
+            "tax_lines": [],
+            "duties": [],
+            "discount_allocations": []
+        }
+    ],
+    "payment_terms": null,
+    "refunds": [],
+    "shipping_address": {
+        "first_name": "Rico",
+        "address1": "8 Water Walk Drive",
+        "phone": null,
+        "city": "Markham",
+        "zip": "L3R 6L4",
+        "province": "Ontario",
+        "country": "Canada",
+        "last_name": "Tse",
+        "address2": null,
+        "company": null,
+        "latitude": 43.8553303,
+        "longitude": -79.3294255,
+        "name": "Rico Tse",
+        "country_code": "CA",
+        "province_code": "ON"
+    },
+    "shipping_lines": [],
+    "returns": [],
+    "line_item_groups": []
+}

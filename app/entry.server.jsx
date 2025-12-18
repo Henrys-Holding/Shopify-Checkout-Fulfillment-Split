@@ -3,7 +3,7 @@ import { renderToPipeableStream } from "react-dom/server";
 import { ServerRouter } from "react-router";
 import { createReadableStreamFromReadable } from "@react-router/node";
 import { isbot } from "isbot";
-import { addDocumentResponseHeaders } from "./shopify.server";
+import { addDocumentResponseHeaders } from "@/app/shopify.server";
 
 export const streamTimeout = 5000;
 
