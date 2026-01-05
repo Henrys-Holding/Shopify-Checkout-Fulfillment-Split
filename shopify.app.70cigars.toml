@@ -1,0 +1,102 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "cfd6915c7c56c440a5b130d35be44c57"
+name = "Checkout Fulfillment Choice"
+application_url = "https://ricotse.ngrok.dev"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = false
+
+[webhooks]
+api_version = "2026-01"
+
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled" ]
+uri = "https://ricotse.ngrok.dev/webhooks/app/uninstalled"
+
+[[webhooks.subscriptions]]
+topics = [ "app/scopes_update" ]
+uri = "https://ricotse.ngrok.dev/webhooks/app/scopes_update"
+
+[[webhooks.subscriptions]]
+topics = [ "orders/create" ]
+filter = "note_attributes.name:split_choice"
+include_fields = [
+    "id", 
+    "admin_graphql_api_id", 
+    "name", 
+    "created_at",
+    "updated_at",
+    "variants.price", 
+    "variants.id", 
+    "note_attributes", 
+    "line_items.id", 
+    "line_items.admin_graphql_api_id", 
+    "line_items.price", 
+    "line_items.quantity", 
+    "email", 
+    "customer.id", 
+    "customer.admin_graphql_api_id", 
+    "customer.email", 
+    "customer.first_name", 
+    "customer.last_name", 
+    "shipping_lines.title",
+    "shipping_address.country_code",
+    "customer_locale"
+]
+uri = "https://ricotse.ngrok.dev/webhooks/app/events/split-fulfillment/primary-order/created"
+
+[[webhooks.subscriptions]]
+topics = [ "orders/cancelled" ]
+filter = "note_attributes.name:split_choice"
+include_fields = [
+    "id", 
+    "admin_graphql_api_id", 
+    "name", 
+    "created_at",
+    "updated_at",
+    "financial_status",
+    "note_attributes"
+]
+uri = "https://ricotse.ngrok.dev/webhooks/app/events/split-fulfillment/primary-order/cancelled"
+
+[[webhooks.subscriptions]]
+topics = [ "orders/updated" ]
+filter = "note_attributes.name:is_additional_shipping_payment_order"
+include_fields = [
+    "id", 
+    "admin_graphql_api_id", 
+    "name", 
+    "created_at",
+    "updated_at",
+    "financial_status",
+    "note_attributes",  
+    "email", 
+    "customer",
+]
+uri = "https://ricotse.ngrok.dev/webhooks/app/events/split-fulfillment/payment-order/paid"
+
+[[webhooks.subscriptions]]
+topics = [ "orders/cancelled" ]
+filter = "note_attributes.name:is_additional_shipping_payment_order"
+include_fields = [
+    "id", 
+    "admin_graphql_api_id", 
+    "name", 
+    "created_at",
+    "updated_at",
+    "financial_status",
+    "note_attributes",  
+    "email", 
+    "customer",
+]
+uri = "https://ricotse.ngrok.dev/webhooks/app/events/split-fulfillment/payment-order/cancelled"
+
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_shipping,write_products,write_draft_orders,write_orders,write_fulfillments,read_assigned_fulfillment_orders, write_assigned_fulfillment_orders,read_merchant_managed_fulfillment_orders, write_merchant_managed_fulfillment_orders, read_third_party_fulfillment_orders,write_payment_terms"
+
+[auth]
+redirect_urls = [ "https://ricotse.ngrok.dev/api/auth" ]
