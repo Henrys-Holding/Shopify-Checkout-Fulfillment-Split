@@ -1,0 +1,21 @@
+{
+  "split_proposal": {
+    "title": "快递公司建议拆分成 {{count}} 个包裹 (需补款 ${{amount}})，请选择是否同意。",
+    "description": "为了您的资金安全，快递建议将订单拆分成 {{count}} 个包裹发出。",
+    "buttons": {
+      "agree": "同意拆单 (请留意账单电邮)",
+      "refuse": "拒绝拆单"
+    }
+  },
+  "split_confirmation": {
+    "agreed": "已选择拆单。后续将发送 ${{amount}} 账单至您的邮箱，请在 24 小时内支付，否则订单将被取消。",
+    "refused": {
+      "title": "拒绝拆单风险提示：",
+      "risk_limit": "• 赔付上限：如发生丢失或破损，快递公司最高仅赔付 $500.00。",
+      "risk_return": "• 退运政策：若因未拆单导致海关退运，原路退款将收取 5% 手续费 (转礼品卡可全额退款)。"
+    }
+  },
+  "errors": {
+    "selection_required": "请选择是否拆分包裹"
+  }
+}

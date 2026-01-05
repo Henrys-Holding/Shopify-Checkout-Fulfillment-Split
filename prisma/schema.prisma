@@ -1,10 +1,19 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+enum AdditionalShippingRequestStatus {
+  PENDING // Initial state
+  APP_DISABLED
+  AWAITING_PAYMENT // Invoice sent, waiting for customer
+  COMPLETED // Paid and Primary Order released
+  CANCELLED // Failed to pay within 24h or manual cancel
+  FAILED // System error during processing
+}
+
 // 1. Define the data source (PostgreSQL for Supabase)
 datasource db {
   provider = "postgresql" // Supabase uses PostgreSQL
-  url      = env("HOSTED_DIRECT_URL") // This is loaded from your .env file
+  url      = env("DIRECT_URL") // This is loaded from your .env file
 }
 
 // 2. Define the generator (Prisma Client)
@@ -12,7 +21,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Session {
+model session {
   id                  String    @id
   shop                String
   state               String
@@ -38,25 +47,25 @@ model Session {
 // ==========================================
 
 model Shop {
-  id             String    @id @default(uuid()) @db.Uuid
-  shop_domain    String    @unique
+  shop_domain    String    @id
   installed_at   DateTime  @default(now())
   uninstalled_at DateTime?
 
   // Relations
-  orders    Order[]
-  customers Customer[]
-  products  Product[]
+  orders                              Order[]
+  customers                           Customer[]
+  products                            Product[]
+  additional_shipping_requests        AdditionalShippingRequest[]
+  additional_shipping_request_setting AdditionalShippingRequestSetting?
 
   @@map("core_shops")
 }
 
 model Customer {
-  id                   String  @id @default(uuid()) @db.Uuid
-  shopify_customer_gid String  @unique
-  email                String?
-  first_name           String?
-  last_name            String?
+  customer_id String  @id
+  email       String?
+  first_name  String?
+  last_name   String?
 
   shop_domain String
   shop        Shop   @relation(fields: [shop_domain], references: [shop_domain])
@@ -67,10 +76,9 @@ model Customer {
 }
 
 model Product {
-  id                  String  @id @default(uuid()) @db.Uuid
-  shopify_product_gid String  @unique
-  title               String
-  handle              String?
+  product_gid String  @id
+  title       String
+  handle      String?
 
   shop_domain String
   shop        Shop   @relation(fields: [shop_domain], references: [shop_domain])
@@ -79,67 +87,93 @@ model Product {
 }
 
 model Order {
-  id                 String   @id @default(uuid()) @db.Uuid
-  shopify_order_gid  String   @unique
-  shopify_order_name String // e.g. "#1001"
-  currency_code      String   @default("USD")
-  total_price        Decimal? @db.Decimal(10, 2)
-  created_at         DateTime @default(now())
-
-  // Foreign Keys
+  order_id    String   @id
+  order_name  String
   shop_domain String
-  customer_id String? @db.Uuid
+  created_at  DateTime
+  updated_at  DateTime
 
-  // Relations
-  shop     Shop      @relation(fields: [shop_domain], references: [shop_domain])
-  customer Customer? @relation(fields: [customer_id], references: [id])
+  // Distinguish between a regular order and one created just for shipping payment
+  is_shipping_payment_order Boolean @default(false)
 
-  // App Extension Relations (1-to-1 or 1-to-many)
-  fulfillment_split FulfillmentSplitState?
-  shipping_invoices ShippingInvoice[]
+  // Relations (inverse sides, no fields/references here)
+  additional_shipping_request AdditionalShippingRequest? @relation("PrimaryOrder")
+  originating_request         AdditionalShippingRequest? @relation("PaymentOrder")
+
+  shop        Shop?     @relation(fields: [shop_domain], references: [shop_domain])
+  customer    Customer? @relation(fields: [customer_id], references: [customer_id])
+  customer_id String?
 
   @@map("core_orders")
 }
 
-// ==========================================
-// APP SPECIFIC TABLES: Fulfillment Split
-// (Specific: Only for this feature)
-// ==========================================
-model FulfillmentSplitState {
-  id String @id @default(uuid()) @db.Uuid
+model AdditionalShippingRequestSetting {
+  id Int @id @default(autoincrement())
 
-  // Link to Core Order (1:1 relation)
-  order_id String @unique @db.Uuid
-  order    Order  @relation(fields: [order_id], references: [id])
+  // Foreign Key
+  // @unique is CRITICAL here. It enforces that one shop can only have one settings record.
+  shop_domain String @unique
 
-  // App Logic Data
-  user_choice        String @default("unknown") // 'yes', 'no'
-  calculated_parcels Int    @default(1)
+  // Relation Definition
+  shop Shop @relation(fields: [shop_domain], references: [shop_domain])
 
-  requires_additional_shipping Boolean  @default(false)
-  additional_shipping_amount   Decimal? @db.Decimal(10, 2)
+  app_enabled Boolean @default(false)
 
-  updated_at DateTime @updatedAt
-
-  @@map("app_fulfillment_splits")
+  @@map("additional_shipping_request_settings")
 }
 
-model ShippingInvoice {
-  id String @id @default(uuid()) @db.Uuid
+model AdditionalShippingRequest {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  // Link to Core Order (Many invoices possible per order, technically)
-  order_id String @db.Uuid
-  order    Order  @relation(fields: [order_id], references: [id])
+  // 1. The original order that needs splitting (required 1–1)
+  primary_order_id String @unique
+  primary_order    Order  @relation("PrimaryOrder", fields: [primary_order_id], references: [order_id])
 
-  // Draft Order Logic
-  draft_order_gid String? @unique
+  // 2. The new order Shopify creates AFTER the draft order is paid (optional 1–1)
+  payment_order_id String? @unique
+  payment_order    Order?  @relation("PaymentOrder", fields: [payment_order_id], references: [order_id])
+
+  // New Tracking Fields
+  primary_order_cancelled_at DateTime?
+  payment_order_cancelled_at DateTime?
+
+  // App Logic
+  user_choice                Boolean?
+  calculated_parcels         Int                             @default(1)
+  additional_shipping_amount Decimal?                        @db.Decimal(10, 2)
+  status                     AdditionalShippingRequestStatus @default(PENDING)
+
+  // Payment Tracking
+  draft_order_id  String?   @unique
   invoice_url     String?
-  status          String  @default("pending") // 'pending', 'paid', 'void'
+  invoice_sent_at DateTime?
 
-  sent_at DateTime?
-  paid_at DateTime?
+  // The "Death Clock" for the 24hr cancellation logic
+  expires_at DateTime?
 
   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@map("app_shipping_invoices")
+  shop_domain String
+  shop        Shop   @relation(fields: [shop_domain], references: [shop_domain])
+
+  // Error Logging
+  error_log String?
+
+  // Relations
+  fulfillment_holds AdditionalShippingRequestFulfillmentHold[] @relation("AdditionalShippingRequest")
+
+  @@map("additional_shipping_requests")
+}
+
+model AdditionalShippingRequestFulfillmentHold {
+  fulfillment_hold_id  String @id
+  fulfillment_order_id String
+
+  released Boolean @default(false)
+
+  additional_shipping_request_id String                    @db.Uuid
+  additional_shipping_request    AdditionalShippingRequest @relation("AdditionalShippingRequest", fields: [additional_shipping_request_id], references: [id])
+
+  @@map("additional_shipping_request_fulfillment_holds")
 }

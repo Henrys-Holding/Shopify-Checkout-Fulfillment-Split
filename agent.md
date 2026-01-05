@@ -1,8 +1,7 @@
-# Agent instructions: Shopify Remix app (Polaris Web Components first)
+# Agent instructions: Shopify React Router app (Polaris Web Components first)
 
 ## Mission
-
-Build a Shopify **Remix.js** app (JavaScript-only) + Shopify UI extensions that:
+Build a Shopify **React Router** app (JavaScript-only) using ***Shopify React Router App Template*** + Shopify UI extensions that:
 
 1. **Checkout:** asks the buyer a **Yes / No** question about **fulfillment splitting** in checkout.
 2. **After checkout:** if fulfillment splitting requires **additional shipping cost**, automatically create a **linked draft order** via **Shopify Admin GraphQL API**, send the **invoice** to the customer, and track whether it has been paid.
@@ -20,6 +19,7 @@ All UI must use **Shopify Polaris Web Components FIRST**, and follow Shopify’s
 ## Hard constraints (non‑negotiable)
 
 ### UI / design
+
 - **Use Polaris web components first** for all UI in:
   - Embedded admin pages
   - Checkout UI extension
@@ -29,10 +29,10 @@ All UI must use **Shopify Polaris Web Components FIRST**, and follow Shopify’s
 - **Avoid custom CSS** unless Polaris documentation explicitly requires it (tokens & component props preferred).
 - Never build interactive “fake buttons/links” with divs. Use `s-button`, `s-link`, and other Polaris primitives.
 
-- Use the Shopify Remix app template’s required packages as-is (do not replace core Shopify/Remix dependencies).
+- Use the Latest Shopify React Router Application app template’s required packages as-is.
 
 ### Stack
-- **Remix.js + JavaScript only (no TypeScript).**
+- **React Router Application + JavaScript only (no TypeScript).**
 - **Supabase** is the backend datastore (Postgres).
 - **Prisma Client must NOT be used at runtime.**
 - **Supabase client for all queries.**
@@ -65,6 +65,7 @@ All UI must use **Shopify Polaris Web Components FIRST**, and follow Shopify’s
 - https://shopify.dev/docs/api/app-home/using-polaris-components#slots
 - https://shopify.dev/docs/api/app-home/using-polaris-components#working-with-forms
 - https://shopify.dev/docs/api/app-home/using-polaris-components#accessibility
+- https://shopify.dev/docs/api/app-home/polaris-web-components/structure/table
 
 ### Polaris Web Components (Checkout UI extension)
 - https://shopify.dev/docs/api/checkout-ui-extensions/latest/polaris-web-components
@@ -72,21 +73,22 @@ All UI must use **Shopify Polaris Web Components FIRST**, and follow Shopify’s
 ### Checkout UI extension APIs
 - https://shopify.dev/docs/api/checkout-ui-extensions/latest/apis
 
-### Shopify Remix app package (strict)
-- https://shopify.dev/docs/api/shopify-app-remix/latest
+### App Home
+App home
+Build your app's primary user interface embedded in the Shopify admin.
+- https://shopify.dev/docs/api/polaris
+- https://shopify.dev/docs/api/app-home/polaris-web-components
 
-Key pages:
-- Admin auth + GraphQL: https://shopify.dev/docs/api/shopify-app-remix/latest/authenticate/admin
-- Admin API: https://shopify.dev/docs/api/shopify-app-remix/latest/apis/admin-api
-- Webhooks (app-specific): https://shopify.dev/docs/api/shopify-app-remix/latest/guide-webhooks
 
----
+### Start building your app fast with the Shopify CLI and the Shopify React Router App template. The CLI will set up App Bridge and the Polaris Web Components for you.
+- https://github.com/Shopify/shopify-app-template-react-router
+
 
 ## Preferred implementation architecture
 
 ### Surfaces
 
-#### 1) Embedded admin app (Remix)
+#### 1) Embedded admin app (New React Router Application)
 - Merchants/admin users view a dashboard of:
   - orders requiring extra shipping payment
   - split choice results
@@ -104,7 +106,7 @@ Key pages:
 - Shows “Additional shipping payment required” if a linked unpaid invoice exists.
 - Provide a single clear call-to-action link/button to the invoice checkout URL (if available).
 
-#### 4) Webhooks + backend jobs (Remix actions)
+#### 4) Webhooks + backend jobs (React Router actions)
 - Webhooks listen for:
   - New order creation (to read buyer choice and decide whether extra shipping is needed)
   - Payment/fulfillment related events needed to update status
@@ -237,7 +239,7 @@ Admin page requirements:
 ## Shopify Admin GraphQL patterns (how to call)
 
 ### Always use Admin GraphQL via authenticate.admin
-- In Remix `loader`/`action` for embedded routes:
+- In `loader`/`action` for embedded routes:
   1. `const { admin, session } = await authenticate.admin(request);`
   2. Use `admin.graphql(...)` for GraphQL queries/mutations.
 
@@ -290,7 +292,7 @@ Admin page requirements:
 ### Forms
 - Prefer native `<form>` + Polaris form components.
 - Ensure every input has an accessible label or `labelAccessibilityVisibility` config as documented.
-- Use Remix actions for submissions; don’t add client-only form libraries.
+- Use React Router actions for submissions; don’t add client-only form libraries.
 
 ### Accessibility
 - Assume accessibility is a feature requirement, not “nice to have”.
@@ -300,17 +302,16 @@ Admin page requirements:
 
 ---
 
-## Remix patterns (preferred)
+## React Router patterns (preferred)
 
 ### Data fetching
-- Use Remix loaders for initial page data (auth + essential records).
+- Use React Router loaders for initial page data (auth + essential records).
 - Use `@tanstack/react-query` for:
   - client-side polling/refresh of payment status
   - pagination & filtering caches
   - optimistic updates where safe
 
 ### Mutations
-- Prefer Remix `<Form>` + server actions for writes that require session/admin access.
 - Use `fetcher` for background updates (refresh status, resend invoice, etc.).
 
 ### Server boundaries

@@ -11,18 +11,20 @@ handle = "fulfillment-split"
 type = "ui_extension"
 uid = "62aaee59-284e-74c2-ea21-4c6d9b79326331eb881f"
 
+
 # Controls where in Shopify your extension will be injected,
 # and the file that contains your extension’s source code. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/extension-targets-overview
 
 [[extensions.targeting]]
 module = "./src/Checkout.jsx"
-target = "purchase.checkout.block.render"
+target = "purchase.checkout.payment-method-list.render-after"
 
 [extensions.capabilities]
 # Gives your extension access to directly query Shopify’s storefront API.
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#api-access
 api_access = true
+block_progress = true
 
 # Gives your extension access to make external network calls, using the
 # JavaScript `fetch()` API. Learn more:
@@ -40,7 +42,6 @@ namespace = "fulfillment_split"
 [[extensions.metafields]]
 key = "fulfillment_count"
 namespace = "fulfillment_split"
-
 
 
 # Defines settings that will be collected from merchants installing

@@ -16,8 +16,12 @@ export const action = async ({ request }) => {
     const customerId = payload.customer ? payload.customer.admin_graphql_api_id : null;
     const customerEmail = payload.email;
 
-    console.log(`Processing Order ${orderName} for ${shop}`);
-    console.log(JSON.stringify(payload, null, 2));
+
+
+    // console.log(`Order paid raw data testing ${orderName} for ${shop}`);
+    // console.log(JSON.stringify(payload, null, 2));
+
+    return new Response();
 
     // 3. Fetch Metafields via GraphQL
     // (Webhooks payloads don't always include all metafields, so we query to be safe)

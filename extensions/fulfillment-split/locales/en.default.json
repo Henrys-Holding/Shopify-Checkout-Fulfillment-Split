@@ -1,6 +1,21 @@
 {
-  "welcome": "Welcome to the {{target}} extension!",
-  "iWouldLikeAFreeGiftWithMyOrder": "I would like to receive a free gift with my order",
-  "addAFreeGiftToMyOrder": "Add a free gift to my order",
-  "attributeChangesAreNotSupported": "Attribute changes are not supported in this checkout"
+  "split_proposal": {
+    "title": "Courier recommends splitting into {{count}} parcels (Extra charge ${{amount}}). Please confirm.",
+    "description": "For the security of your funds and goods, the courier recommends splitting this order into {{count}} parcels.",
+    "buttons": {
+      "agree": "Agree to Split (Invoice will be emailed)",
+      "refuse": "Refuse Split"
+    }
+  },
+  "split_confirmation": {
+    "agreed": "Split agreed. An invoice for ${{amount}} will be sent to your email. Please pay within 24 hours to avoid order cancellation.",
+    "refused": {
+      "title": "Risks of Refusing Split:",
+      "risk_limit": "Compensation Limit: In case of loss or damage, the courier covers up to $500.00 max.",
+      "risk_return": "Return Policy: If customs returns the package due to non-splitting, a 5% fee applies for original payment refunds (Store credit refunds are full)."
+    }
+  },
+  "errors": {
+    "selection_required": "Please select whether to split the parcel"
+  }
 }

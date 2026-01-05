@@ -6,7 +6,8 @@ const toCents = (val) => Math.round(parseFloat(val) * 100);
 
 export function recommendFulfillmentCount(lines, opts = {}) {
     // ---- config (all cents; convert dollars to cents safely) ----
-    const capCents = dollarsToCents(opts.cap == null ? 270 : opts.cap);
+    console.log(`calculateing fulfillment count using cap ${opts.cap ?? 270}`)
+    const capCents = dollarsToCents(opts?.cap ?? 276);
     const absorbPerHeavyCents = dollarsToCents(
         opts.absorbPerHeavy == null ? 60 : opts.absorbPerHeavy,
     );
@@ -134,4 +135,32 @@ export function recommendFulfillmentCount(lines, opts = {}) {
     const fulfillmentCount = heavyUnitCount + additionalParcels;
 
     return { fulfillmentCount };
+}
+
+export function getParcelPriceByShippingLineTitle(title, countryCode) {
+    if (!title || !countryCode) return null;
+    if (title.includes('1档邮政') || title.includes('#1')) return countryCode === "CN" ? 25 : 38;
+    if (title.includes('2档邮政') || title.includes('#2')) return countryCode === "CN" ? 25 : 38;
+    if (title.includes('3档邮政') || title.includes('#3')) return countryCode === "CN" ? 38 : 38;
+    if (title.includes('4档邮政') || title.includes('#4')) return countryCode === "CN" ? 15 : 38;
+    if (title.includes('5档邮政') || title.includes('#5')) return countryCode === "CN" ? 38 : 38;
+    return null;
+}
+
+export function getShippingLineLevel(title, countryCode) {
+    if (!title || !countryCode) return null;
+    if (title.includes('1档邮政') || title.includes('#1')) return countryCode === "CN" ? 1 : 2;
+    if (title.includes('2档邮政') || title.includes('#2')) return countryCode === "CN" ? 2 : 2;
+    if (title.includes('3档邮政') || title.includes('#3')) return countryCode === "CN" ? 3 : 2;
+    if (title.includes('4档邮政') || title.includes('#4')) return countryCode === "CN" ? 4 : 2;
+    if (title.includes('5档邮政') || title.includes('#5')) return countryCode === "CN" ? 5 : 2;
+    return null;
+}
+
+export function getFulfillmentCap(countryCode) {
+    if (!countryCode) return null;
+    if (countryCode === "CN") return 276;
+    if (countryCode === "HK") return 500;
+    if (countryCode === "TW") return 500;
+    return null;
 }
