@@ -20,10 +20,6 @@ topics = [ "app/scopes_update" ]
 uri = "https://ricotse.ngrok.dev/webhooks/app/scopes_update"
 
 [[webhooks.subscriptions]]
-topics = [ "orders/paid" ]
-uri = "https://ricotse.ngrok.dev/webhooks/app/orders_create"
-
-[[webhooks.subscriptions]]
 topics = [ "orders/create" ]
 filter = "note_attributes.name:split_choice"
 include_fields = [

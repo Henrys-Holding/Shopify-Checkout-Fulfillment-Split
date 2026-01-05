@@ -6,7 +6,7 @@
 api_version = "2025-10"
 
 [[extensions]]
-name = "fulfillment-split"
+name = "Fulfillment Split Request"
 handle = "fulfillment-split"
 type = "ui_extension"
 uid = "62aaee59-284e-74c2-ea21-4c6d9b79326331eb881f"

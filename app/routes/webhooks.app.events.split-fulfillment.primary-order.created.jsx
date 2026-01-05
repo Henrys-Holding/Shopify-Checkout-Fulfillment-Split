@@ -22,7 +22,6 @@ export const action = async ({ request }) => {
             line_items,
             shipping_lines,
             customer,
-            financial_status,
             created_at,
             updated_at,
             shipping_address,
@@ -132,6 +131,7 @@ export const action = async ({ request }) => {
                 user_choice: splitChoiceBoolean,
                 status: !isAppEnabled ? 'APP_DISABLED' : splitChoiceBoolean ? 'PENDING' : 'COMPLETED', // PENDING -> PROCESSING -> COMPLETED (or FAILED)
                 calculated_parcels: fulfillmentCount,
+                shipping_level: shippingLineLevel,
                 additional_shipping_amount: additionalShippingAmount,
                 error_log: null,
                 updated_at: new Date(),

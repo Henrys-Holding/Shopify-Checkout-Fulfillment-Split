@@ -66,7 +66,6 @@ function App() {
     // D. Run the Algorithm
     const result = recommendFulfillmentCount(lines, { cap });
 
-    console.log(`Calculation Result:`, result);
     // E. Update State
     setCalculation({
       fulfillmentCount: result.fulfillmentCount,
@@ -109,8 +108,8 @@ function App() {
     if (canBlockProgress && !currentChoice) {
       return {
         behavior: 'block',
-        reason: '請選擇是否拆分包裹',
-        errors: [{ message: '請選擇是否拆分包裹' }],
+        reason: translate('errors.selection_required'),
+        errors: [{ message: translate('errors.selection_required') }],
       };
     }
     return { behavior: 'allow' };

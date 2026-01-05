@@ -252,10 +252,10 @@ function RequestRow({ req }) {
             remove-underline
             monochrome
           >
-            <s-text weight="bold">{req.primary_order?.order_name}</s-text>
+            <s-text type="strong">{req.primary_order?.order_name}</s-text>
           </s-link>
           {req.primary_order_cancelled_at && (
-            <s-badge tone="critical">已取消</s-badge>
+            <s-chip color="strong">已取消</s-chip>
           )}
         </s-stack>
 
@@ -270,14 +270,13 @@ function RequestRow({ req }) {
             remove-underline
             monochrome
           >
-            <s-stack direction="inline" justify="center" align="center" gap="small-300">
+            <s-stack direction="inline" alignContent="center" alignItems="center" gap="small-300">
               <s-icon type="money" />
-              <s-text weight="bold">{req.payment_order?.order_name}</s-text>
+              <s-text type="strong">{req.payment_order?.order_name}</s-text>
             </s-stack>
             {req.payment_order_cancelled_at && (
-              <s-badge tone="critical">已取消</s-badge>
+              <s-chip color="strong">已取消</s-chip>
             )}
-
           </s-link>
         ) : (
           <s-text tone="subdued">-</s-text>
@@ -302,13 +301,22 @@ function RequestRow({ req }) {
       </s-table-cell>
 
       {/* 5. Amount */}
-      <s-table-cell numeric>{req.formattedAmount}</s-table-cell>
+      <s-table-cell numeric>
+        <s-stack>
+          <s-text>{req.formattedAmount}</s-text>
+          {req.shipping_level && (
+            <s-text>檔位：{req.shipping_level}檔</s-text>
+          )}
+          {req.additional_shipping_amount && (
+            <s-text>運費計算：${parseFloat(req.additional_shipping_amount) / (parseFloat(req.calculated_parcels) - 1)} * {req.calculated_parcels - 1}</s-text>
+          )}
+        </s-stack>
+      </s-table-cell>
 
       {/* 6. Status */}
       <s-table-cell>
         <StatusBadge status={req.status} errorLog={req.error_log} timeLeftDisplay={req.timeLeftDisplay} primaryOrder={req.primary_order} primaryOrderCancelledAt={req.primary_order_cancelled_at} paymentOrder={req.payment_order} paymentOrderCancelledAt={req.payment_order_cancelled_at} />
       </s-table-cell>
-
 
 
       {/* 8. Holds (The "Dropdown" Detail View) */}

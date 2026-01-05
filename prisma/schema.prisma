@@ -142,6 +142,7 @@ model AdditionalShippingRequest {
   calculated_parcels         Int                             @default(1)
   additional_shipping_amount Decimal?                        @db.Decimal(10, 2)
   status                     AdditionalShippingRequestStatus @default(PENDING)
+  shipping_level             Int?
 
   // Payment Tracking
   draft_order_id  String?   @unique
