@@ -1,8 +1,12 @@
-// app/supabase.server.js
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
-// Vite environment variables
+function requireEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Missing env var: ${name}`);
+  return v;
+}
+
 export const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY // Must use Service Role for backend writes
+  requireEnv("VITE_SUPABASE_URL"),
+  requireEnv("VITE_SUPABASE_SERVICE_ROLE_KEY")
 );

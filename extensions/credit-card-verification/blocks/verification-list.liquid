@@ -1,0 +1,37 @@
+<div class="ccv-root"
+  data-endpoint="{{ block.settings.endpoint }}"
+  data-upload-endpoint="{{ block.settings.upload_endpoint }}"
+  data-title="{{ block.settings.title | escape }}"
+  data-upload-text="{{ block.settings.upload_text | escape }}"
+  data-max-files="{{ block.settings.max_files }}"
+  data-max-mb="{{ block.settings.max_file_size_mb }}"
+>
+  {% if customer %}
+    <div class="ccv-loading">{{ block.settings.loading_text }}</div>
+  {% else %}
+    <div class="ccv-logged-out">{{ block.settings.login_text }}</div>
+  {% endif %}
+</div>
+
+<script src="{{ 'ccv-verifications.js' | asset_url }}" defer></script>
+{{ 'ccv-verifications.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Verification list",
+  "target": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Card verification" },
+    { "type": "text", "id": "endpoint", "label": "App proxy endpoint (GET list)", "default": "/apps/cc-verify/credit-card-verifications" },
+
+    { "type": "text", "id": "upload_endpoint", "label": "App proxy endpoint (POST upload)", "default": "/apps/cc-verify/credit-card-verifications/upload" },
+    { "type": "text", "id": "upload_text", "label": "Upload button text", "default": "Upload" },
+
+    { "type": "range", "id": "max_files", "label": "Max files", "min": 1, "max": 10, "step": 1, "default": 3 },
+    { "type": "range", "id": "max_file_size_mb", "label": "Max file size (MB)", "min": 1, "max": 25, "step": 1, "default": 5 },
+
+    { "type": "text", "id": "loading_text", "label": "Loading text", "default": "Loading..." },
+    { "type": "text", "id": "login_text", "label": "Logged out text", "default": "Please log in to view your verification status." }
+  ]
+}
+{% endschema %}

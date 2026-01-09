@@ -1,0 +1,46 @@
+{
+  "title": "My App",
+  "welcome": "Welcome to My App",
+  "description": "An app that does amazing things.",
+  "Error": "Error",
+  "UnexpectedError": "An unexpected error occurred. Please try again later.",
+  "SomethingWentWrong": "Something went wrong. Try again later or contact support.",
+  "UnauthorizedAccess": "You are not authorized to access this resource.",
+  "VerificationNotFound": "Verification request not found. Please ensure your link is correct.",
+  "creditCardVerificationInstructions": "Thank you for the business. We have received your order. In order to verify your identity, please provide a clear picture proof of the credit card used for this transaction, ending with {{last4Digits}}. We will ship your order upon receipt of the picture proof. Before then, your order will be temporarily held for up to 1 week. If the picture proof cannot be provided, the order will be cancelled, and we will kindly issue you a full refund of payment.",
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "upload": "Upload",
+    "submit": "Submit"
+  },
+  "messages": {
+    "uploadSuccess": "Upload successful.",
+    "uploadFailure": "Upload failed, please try again.",
+    "minImageUpload": "You must upload at least one image.",
+    "fileTypeSupport": "Supported file types: PNG, JPG, JPEG",
+    "clickToUpload": "Click to upload",
+    "orDrag": "or drag and drop",
+    "verificationNeeded": "Action Required: Verify Your Credit Card"
+  },
+  "errors": {
+    "serverError": "Server error, please try again later.",
+    "networkError": "Network error, please check your connection.",
+    "exceedMaximumFile": "Max {{limit}} images allowed.",
+    "fileTooLarge": "File size is too large.",
+    "unexpectedError": "An unexpected error occurred. Please try again later.",
+    "invalidImageFile": "We encountered an issue with your submission. The file you've uploaded does not appear to be a valid image, or we were unable to process it. Please ensure you're submitting a clear, unmodified image in one of the following formats: JPEG, PNG, or GIF. Once you have a compatible image, please try uploading again. For further assistance, feel free to contact our support team. Thank you for your cooperation and understanding.",
+    "maxAttemptCountReached": "Maximum attempt count reached.",
+    "fileTypeAndSizeError": "{{fileType}} {{fileSize}} KB. Only jpeg, png, or jpg image files are allowed, and the image size must be less than 5000KB."
+  },
+  "verification": {
+    "pending": "Thank you for sending us your credit card photo! It's now with the payment gateway for review, which typically takes between 3 to 72 hours. Please note, this timeframe might extend over weekends and holidays. We appreciate your patience and understanding!",
+    "failed": "We've reviewed the content you submitted, but we're unable to verify your credit card.",
+    "success": "Verification successful. Your order is now being processed."
+  },
+  "creditCardPreAuthExplanation": {
+    "title": "What is a credit card pre-authorization?",
+    "answer": "A pre-authorization transaction is a temporary hold of a specific amount of the cardholder's available credit balance. It's not an actual charge. The funds are frozen until the merchant confirms that the card is being used by the legitimate owner, at which point the charge is made (transaction payment). This is an effective way to protect card owners from unauthorized use. If a pre-authorized order is canceled, the held funds are automatically released (transaction canceled). The specific timing for the release of funds depends on the card-issuing bank, and the merchant cannot decide on it. Since a pre-authorization does not result in an actual transaction payment, and the merchant has not received any money, customers will not receive a refund for canceled pre-authorized orders. For more specific information, please consult the issuing bank."
+  }
+}

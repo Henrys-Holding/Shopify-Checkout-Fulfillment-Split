@@ -100,10 +100,16 @@ model Order {
   additional_shipping_request AdditionalShippingRequest? @relation("PrimaryOrder")
   originating_request         AdditionalShippingRequest? @relation("PaymentOrder")
 
-  shop        Shop?     @relation(fields: [shop_domain], references: [shop_domain])
-  customer    Customer? @relation(fields: [customer_id], references: [customer_id])
-  customer_id String?
+  shop                        Shop?                   @relation(fields: [shop_domain], references: [shop_domain])
+  customer                    Customer?               @relation(fields: [customer_id], references: [customer_id])
+  customer_id                 String?
+  credit_card_verification    CreditCardVerification? @relation(fields: [credit_card_verification_id], references: [id])
+  credit_card_verification_id String?                 @db.Uuid
 
+  cancelled_at                                 DateTime?
+  
+  credit_card_verification_request_fulfillment_holds CreditCardVerificationRequestFulfillmentHold[]
+  
   @@map("core_orders")
 }
 
@@ -177,4 +183,114 @@ model AdditionalShippingRequestFulfillmentHold {
   additional_shipping_request    AdditionalShippingRequest @relation("AdditionalShippingRequest", fields: [additional_shipping_request_id], references: [id])
 
   @@map("additional_shipping_request_fulfillment_holds")
+}
+
+// Migrate From Credit Card Verification
+model CreditCardVerificationSetting {
+  id                       Int     @id @default(autoincrement())
+  shop                     String  @unique
+  app_domain               String?
+  enabled                  Boolean @default(true)
+  auto_change_order_status Boolean @default(true)
+
+  @@map("credit_card_verification_settings")
+}
+
+model CreditCardVerification {
+  id                  String                        @id @default(uuid()) @db.Uuid
+  customer_id         String
+  customer_name       String
+  customer_email      String
+  customer_locale     String?
+  shipping_country    String?
+  internal_notes      String?
+  shop                String
+  credit_card_number  String
+  credit_card_bin     Int
+  bin_lookup          CreditCardBinLookup?          @relation(fields: [bin_lookup_id], references: [id])
+  bin_lookup_id       Int?
+  credit_card_company String
+  submission_time     DateTime?
+  attempt_count       Int                           @default(0)
+  status              CreditCardVerificationStatus  @default(PENDING_SUBMISSION)
+  images              CreditCardVerificationImage[]
+  created_at          DateTime                      @default(now())
+  updated_at          DateTime                      @updatedAt
+  token               String
+  risk_level          CreditCardRiskLevel?
+  risk_recommendation CreditCardRiskRecommendation?
+
+  orders            Order[]
+  follow_up         Boolean?                                       @default(false)
+  fulfillment_holds CreditCardVerificationRequestFulfillmentHold[] @relation("CreditCardVerification")
+
+  @@unique([shop, credit_card_number, customer_id, credit_card_bin])
+  @@map("credit_card_verifications")
+}
+
+model CreditCardVerificationImage {
+  id                          Int                    @id @default(autoincrement())
+  credit_card_verification_id String                 @db.Uuid
+  credit_card_verification    CreditCardVerification @relation(fields: [credit_card_verification_id], references: [id])
+  s3_file_key                 String                 @unique
+
+  @@map("credit_card_verification_images")
+}
+
+model CreditCardBinLookup {
+  id                       Int                      @id @default(autoincrement())
+  bin                      Int                      @unique
+  bank                     String
+  country                  String?
+  country_code             String?
+  type                     String?
+  scheme                   String?
+  url                      String?
+  credit_card_verification CreditCardVerification[]
+
+  @@map("credit_card_bin_lookups")
+}
+
+model CreditCardVerificationRequestFulfillmentHold {
+  fulfillment_hold_id  String @unique
+  fulfillment_order_id String @id
+
+  released Boolean @default(false)
+
+  credit_card_verification_id String                 @db.Uuid
+  credit_card_verification    CreditCardVerification @relation("CreditCardVerification", fields: [credit_card_verification_id], references: [id])
+
+  order_id String
+  order    Order  @relation(fields: [order_id], references: [order_id])
+
+  @@map("credit_card_verification_fulfillment_holds")
+}
+
+enum CreditCardVerificationStatus {
+  PENDING_SUBMISSION
+  PENDING_VERIFICATION
+  DENIED
+  APPROVED
+  ATTEMPTS_EXCEEDED
+}
+
+enum CreditCardRiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  NONE
+  PENDING
+}
+
+enum CreditCardRiskRecommendation {
+  ACCEPT
+  CANCEL
+  INVESTIGATE
+  NONE
+}
+
+enum CreditCardOrderStatus {
+  HOLD
+  RELEASED
+  CANCELED
 }

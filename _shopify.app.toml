@@ -20,22 +20,6 @@ topics = [ "app/scopes_update" ]
 uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/scopes_update"
 
 [[webhooks.subscriptions]]
-topics = [ "orders/updated" ]
-filter = "note_attributes.name:is_additional_shipping_payment_order"
-include_fields = [
-    "id", 
-    "admin_graphql_api_id", 
-    "name", 
-    "created_at",
-    "updated_at",
-    "financial_status",
-    "note_attributes",  
-    "email", 
-    "customer",
-]
-uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/events/split-fulfillment/payment-order/paid"
-
-[[webhooks.subscriptions]]
 topics = [ "orders/create" ]
 include_fields = [
     "id", 
@@ -55,14 +39,10 @@ include_fields = [
     "customer.admin_graphql_api_id", 
     "customer.email", 
     "customer.first_name", 
-    "customer.last_name",
+    "customer.last_name", 
     "shipping_lines.title",
     "shipping_address.country_code",
-    "billing_address.country_code",
-    "customer_locale",
-    "payment_gateway_names",
-    "customer_locale",
-    "financial_status"
+    "customer_locale"
 ]
 uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/events/orders/create/queued"
 
@@ -79,6 +59,22 @@ include_fields = [
     "note_attributes"
 ]
 uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/events/split-fulfillment/primary-order/cancelled"
+
+[[webhooks.subscriptions]]
+topics = [ "orders/updated" ]
+filter = "note_attributes.name:is_additional_shipping_payment_order"
+include_fields = [
+    "id", 
+    "admin_graphql_api_id", 
+    "name", 
+    "created_at",
+    "updated_at",
+    "financial_status",
+    "note_attributes",  
+    "email", 
+    "customer",
+]
+uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/events/split-fulfillment/payment-order/paid"
 
 [[webhooks.subscriptions]]
 topics = [ "orders/cancelled" ]
@@ -100,12 +96,7 @@ uri = "https://798dc5490c64.ngrok-free.app/webhooks/app/events/split-fulfillment
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_shipping,write_products,write_draft_orders,write_orders,write_fulfillments,read_assigned_fulfillment_orders, write_assigned_fulfillment_orders,read_merchant_managed_fulfillment_orders, write_merchant_managed_fulfillment_orders, read_third_party_fulfillment_orders,write_payment_terms,read_customers"
+scopes = "write_shipping,write_products,write_draft_orders,write_orders,write_fulfillments,read_assigned_fulfillment_orders, write_assigned_fulfillment_orders,read_merchant_managed_fulfillment_orders, write_merchant_managed_fulfillment_orders, read_third_party_fulfillment_orders,write_payment_terms"
 
 [auth]
 redirect_urls = [ "https://798dc5490c64.ngrok-free.app/api/auth" ]
-
-[app_proxy]
-url = "/app-proxy"
-prefix = "apps"
-subpath = "cc-verify"

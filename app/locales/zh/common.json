@@ -1,0 +1,46 @@
+{
+	"title": "我的应用",
+	"welcome": "欢迎使用我的应用",
+	"description": "一个做神奇事情的应用。",
+	"Error": "錯誤",
+	"UnexpectedError": "一个意料之外的问题发生了。请稍后再试。",
+	"SomethingWentWrong": "出了些问题。请稍后重试或联系支持人员。",
+	"UnauthorizedAccess": "您无权访问此资源。",
+	"VerificationNotFound": "未找到验证请求。请确保您的链接正确。",
+	"creditCardVerificationInstructions": "非常感谢您对70Cigars的支持，为确保信用卡是本人使用，支付公司要求提供尾号 {{last4Digits}} 的照片审核。请按下图所示，用手指或其它物品遮挡前部卡号，露出后四位、卡主姓名和到期日，您可直接回复本邮件发送信用卡照片。",
+	"actions": {
+		"save": "保存",
+		"cancel": "取消",
+		"delete": "删除",
+		"upload": "上传",
+		"submit": "提交"
+	},
+	"messages": {
+		"uploadSuccess": "上传成功。",
+		"uploadFailure": "上传失败，请重试。",
+		"minImageUpload": "您至少需要上传一张图片。",
+		"fileTypeSupport": "支持的文件类型: PNG, JPG, JPEG",
+		"clickToUpload": "点击上传",
+		"orDrag": "或拖放图片",
+		"verificationNeeded": "需要操作：请验证您的信用卡"
+	},
+	"errors": {
+		"serverError": "服务器错误，请稍后再试。",
+		"networkError": "网络错误，请检查您的连接。",
+		"exceedMaximumFile": "仅允许最多{{limit}}张图片。",
+		"fileTooLarge": "文件大小过大。",
+		"unexpectedError": "发生意外错误。请稍后再试。",
+		"invalidImageFile": "我們在您提交的內容中遇到了問題。您上傳的檔案似乎不是有效的圖像，或者我們無法處理它。請確保您提交的是以下格式之一的清晰、未經修改的圖片：JPEG、PNG. 獲得相容的圖像後。請嘗試再次上傳。如需進一步協助，請隨時聯絡我們的支援團隊。 感謝您的合作與理解。",
+		"maxAttemptCountReached": "已达到最大尝试次数。",
+		"fileTypeAndSizeError": "{{fileType}} {{fileSize}}KB。只允许使用 jpeg、png 或 jpg 图像文件，并且图片大小必须小于5000KB。"
+	},
+	"verification": {
+		"pending": "您提交的信用卡照片已收到，将提交给支付网关审核，通常需要3-72小时，周末节假日顺延。感谢您的耐心与合作！",
+		"failed": "我们已审核您提交的内容，但无法验证您的信用卡。",
+		"success": "验证成功。您的订单正在处理中。"
+	},
+	"creditCardPreAuthExplanation": {
+		"title": "什么是信用卡预授权？",
+		"answer": "预授权交易是对持卡人的账户余额（或信用额度）预先冻结（并未实际支付），只有在确认是本人使用卡片后，商户才会实际扣款（交易支付），这是保护卡主防止盗刷的有效方式。预授权订单如果被取消，冻结的款项会自动释放（取消交易），具体释放时效根据发卡行自行决定，商户无权决定。由于预授权并未产生实际交易支付，商户也没有收到付款，因此取消的预授权订单客户不会收到退款，更多具体信息可咨询发卡行。"
+	}
+}

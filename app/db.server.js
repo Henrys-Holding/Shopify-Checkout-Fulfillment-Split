@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import "dotenv/config"; 
 
 if (process.env.NODE_ENV !== "production") {
   if (!global.prismaGlobal) {
